@@ -1,0 +1,44 @@
+<!-- DOCTYPE HTML -->
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+</body>
+</html>>
+
+<HEAD>
+
+<TITLE>Your Title Here</TITLE>
+
+</HEAD>
+
+<BODY BGCOLOR="FFD0C6">
+
+<HR>
+
+<H1>{{title}} IS WORKING</H1>
+
+<H2>SMALLER SUBTEXT</H2>
+
+<P> This is a new paragraph!
+
+</P> <B>This is a new paragraph!</B>
+
+<BR> <B><I>This is a new sentence without a paragraph break, in bold italics.</I></B>
+<H3>POSTS</H3> 
+
+{%for obj in object_list%}
+{{obj.title}}</br>
+{{obj.content}}</br>
+{{obj.timestamp}}</br>
+{{obj.updated}}</br>
+{{obj.id}}</br>
+{%endfor%}
+
+</HR>
+
+</BODY>
+
+</HTML>
