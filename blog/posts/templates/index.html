@@ -2,7 +2,7 @@
 
 <HEAD>
 
-<TITLE>I AM SELIN</TITLE>
+<TITLE>Home</TITLE>
 
 </HEAD>
 
@@ -16,9 +16,9 @@
 <P> <B>You boutta see all your posts boi!</B></P>
 {%for obj in object_list%}
  /posts/id/
-{% url "detail" id=obj.id %} 
+{% url 'detail' id=obj.id %} 
 <a href = '{{obj.get_absolute_url}}'>{{obj.title}}</a><br/>
-{{obj.title}}<br/>
+<b>{{obj.title}}</b><br/>
 {{obj.content}}<br/>
 Created: {{obj.timestamp}}<br/>
 Updated: {{obj.updated}}<br/>
