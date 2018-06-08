@@ -1,0 +1,32 @@
+<HTML>
+
+<HEAD>
+
+<TITLE>I AM SELIN</TITLE>
+
+</HEAD>
+
+<BODY BGCOLOR="FFEDE9">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<HR>
+
+<H1> {{title}}</H1>
+
+{{instance.content}}<br/>
+Created: {{instance.timestamp}}<br/>
+Updated: {{instance.updated}}<br/>
+^ID: {{instance.id}}<br/>
+
+
+<HR>
+
+</BODY>
+
+</HTML>

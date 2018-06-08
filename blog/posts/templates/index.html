@@ -1,0 +1,33 @@
+<HTML>
+
+<HEAD>
+
+<TITLE>I AM SELIN</TITLE>
+
+</HEAD>
+
+<BODY BGCOLOR="FFEDE9">
+
+<HR>
+
+<H1>{{title}} Is Working!</H1>
+
+
+<P> <B>You boutta see all your posts boi!</B></P>
+{%for obj in object_list%}
+ /posts/id/
+{% url "detail" id=obj.id %} 
+<a href = '{{obj.get_absolute_url}}'>{{obj.title}}</a><br/>
+{{obj.title}}<br/>
+{{obj.content}}<br/>
+Created: {{obj.timestamp}}<br/>
+Updated: {{obj.updated}}<br/>
+^ID: {{obj.id}}<br/>
+
+{%endfor%}
+
+<HR>
+
+</BODY>
+
+</HTML>

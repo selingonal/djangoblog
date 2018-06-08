@@ -9,5 +9,4 @@ Successes:
   Building the "posts" app
   
  Needs work/ attention:
-  two other apps made without 
-  https://www.youtube.com/watch?v=yfgsklK_yFo&list=PLEsfXFp6DpzQFqfCur9CJ4QnKQTVXUsRy
+ 	HttpResponseRedirect- What gives?
