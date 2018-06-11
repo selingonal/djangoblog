@@ -7,22 +7,32 @@
 </HEAD>
 
 <BODY BGCOLOR="FFEDE9">
-{% if messages %}
+<!-- {% if messages %}
 <ul class="messages">
     {% for message in messages %}
     <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
 {% endif %}
-
+ -->
 <HR>
 
+<p> Author: {{instance.user}} </p>
+
 <H1> {{title}}</H1>
+
+{%if instance.image %}
+ <img src = '{{instance.image.url}}' class = 'img-responsive'/>
+ {%endif%}
+ {%if instance.image %}
+<embed src='{{instance.image.url}}' class = 'img-responsive'width="500" height= "375" type='application/pdf'/> 
+{%endif%}
 
 {{instance.content}}<br/>
 Created: {{instance.timestamp}}<br/>
 Updated: {{instance.updated}}<br/>
 ^ID: {{instance.id}}<br/>
+<a href = '/posts'>Back to home</a><br/>
 
 
 <HR>

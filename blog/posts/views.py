@@ -1,8 +1,9 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Post
 from .forms import PostForm
+
 # The method we are designing, this app around is CRUD
 # CREATE -- MAKE NEW
 # RETRIEVE -- GET
@@ -10,9 +11,15 @@ from .forms import PostForm
 # DELETE -- DELETE
 
 def post_create(request): #Create
-	form = PostForm(request.POST or None)
+	# if not request.user.is_staff or not request.user.is_superuser:
+	# 	raise Http404
+	# if not request.useris_authenticated():
+	# 	raise Http404
+
+	form = PostForm(request.POST or None, request.FILES or None)
 	if form.is_valid():
 		instance = form.save(commit = False)
+		instance.user = request.user
 		instance.save()
 		form=PostForm()
 		messages.success(request, "Successfully Created!")
@@ -24,6 +31,8 @@ def post_create(request): #Create
 
 
 def post_detail(request, id=None): #retrieve
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise Http404
 	instance = get_object_or_404(Post, id=id)
 	context ={
 		"title": instance.title,
@@ -42,9 +51,10 @@ def post_list(request): #list items
 
 
 def post_update(request, id =None): #edit
-	
+	# if not request.user.is_staff or not request.user.is_superuser:
+	# 	raise Http404
 	instance = get_object_or_404(Post, id=id)
-	form = PostForm(request.POST or None, instance =instance)
+	form = PostForm(request.POST or None, request.FILES or None, instance =instance)
 	if form.is_valid():
 		instance = form.save(commit = False)
 		instance.save()
@@ -60,6 +70,8 @@ def post_update(request, id =None): #edit
 
 
 def post_delete(request, id=None): #delete
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise Http404
 	instance = get_object_or_404(Post, id=id)
 	form = PostForm(request.POST or None, instance =instance)
 	instance.delete()

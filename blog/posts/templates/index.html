@@ -12,8 +12,8 @@
 
 <H1>{{title}} Is Working!</H1>
 
+<a href = '/posts/create/'>Create Post</a><br/>
 
-<P> <B>You boutta see all your posts boi!</B></P>
 {%for obj in object_list%}
  /posts/id/
 {% url 'detail' id=obj.id %} 
@@ -23,6 +23,9 @@
 Created: {{obj.timestamp}}<br/>
 Updated: {{obj.updated}}<br/>
 ^ID: {{obj.id}}<br/>
+<a href = '{{obj.get_absolute_url}}edit/'>Edit Post</a><br/>
+<a href = '{{obj.get_absolute_url}}delete/'>Delete Post</a><br/>
+
 
 {%endfor%}
 
