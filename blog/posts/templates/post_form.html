@@ -1,17 +1,8 @@
+{% extends "base.html" %}
 
 
-<HTML>
-
-<HEAD>
-
-<TITLE>Make a post!</TITLE>
-
-</HEAD>
-
-<BODY BGCOLOR="FFEDE9">
-
-<HR>
-
+{%block content%}
+{{block.super}}
 <H1> Form</H1>
 
 <form method ='POST' action ='' enctype =' multipart/form-data'> {% csrf_token %}
@@ -19,9 +10,4 @@
 <input type='submit' value='Create Post'>
 
 </form>
-
-<HR>
-
-</BODY>
-
-</HTML>
+{%endblock content%}
