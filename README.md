@@ -13,4 +13,4 @@ Successes:
   App has basic functionality now, looks p nice
   
  Needs work/ attention:
- 	Need to make user permissions work, make page to allow users to sign up/be given permissons through a homepage, comments
+ 	Need to make user permissions work, make page to allow users to sign up/be given permissons through a homepage
