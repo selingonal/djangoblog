@@ -1,10 +1,11 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
+
 
 # The method we are designing, this app around is CRUD
 # CREATE -- MAKE NEW
@@ -13,10 +14,10 @@ from django.shortcuts import render
 # DELETE -- DELETE
 
 def post_create(request): #Create
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
-	if not request.useris_authenticated():
-		raise Http404
+	# if not request.user.is_staff or not request.user.is_superuser:
+	# 	raise Http404
+	# if not request.useris_authenticated():
+	# 	raise Http404
 
 	form = PostForm(request.POST or None, request.FILES or None)
 	if form.is_valid():
@@ -36,17 +37,22 @@ def post_detail(request, id=None): #retrieve
 	if not request.user.is_staff or not request.user.is_superuser:
 		raise Http404
 	instance = get_object_or_404(Post, id=id)
+	comments= Comment.objects.filter(post = id)
+
 	context ={
 		"title": instance.title,
 		"instance": instance,
+		"comments":comments,
 	}
 	return render(request, "post_detail.html",context)
 
 
 def post_list(request): #list items
 	queryset_list= Post.objects.all()
-	paginator = Paginator(queryset_list, 10) # Show 25 contacts per page
-
+	paginator = Paginator(queryset_list, 10) # Show 10 contacts per page
+	query= request.GET.get('q')
+	if query:
+		 queryset_list=queryset_list.filter(title__icontains=query)
 	page = request.GET.get('page')
 	queryset = paginator.get_page(page)
 

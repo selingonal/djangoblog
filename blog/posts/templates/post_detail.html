@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}2
 
 {%block head_title%}{{instance.title}} | {{block.super}} {%endblock head_title%}
 
@@ -18,7 +18,27 @@
 {{instance.content|linebreaks}}<br/>
 <small>Updated: {{instance.updated}}</small><br/>
 <div>
-	<p><a href="/posts" class="btn btn-primary" role="button">Home</a></p>
+	<p><a href="/posts" class="btn btn-primary" role="button">Home</a>
+	<a href="/posts/create" role="button">Leave a comment</a>
+	</p>
 </div>
+<small><small><small><p> Total Number of Comments: {{comments.count}}</p></small></small></small>
+<div class='col-sm-20 col-sm-offset-5'>
+{%for comment in comments %}
+	<div class='row'>
+    <div class='col-sm-12'>
+        <div class='thumbnail'>
+				<p>user: {{comment.user}}</p>
+				<p>{{comment.content}}</p>
+				<p>{{comment.timestamp}}</p>
+                <p>{{obj.content|linebreaks|truncatechars:30}}</p>
+                
+                </div></div>
+        </div>
+    </div>
+</div>
+{%empty%}
+	<p>There are no comments for this post</p>
+{%endfor%}
 </div>
 {%endblock content%}
