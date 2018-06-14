@@ -3,11 +3,10 @@
 
 {%block content%}
 {{block.super}}
-<H1> Create a Post!</H1>
+<H1> Comment</H1>
 
 <form method ='POST' action ='' enctype =' multipart/form-data'> {% csrf_token %}
 {{form.as_p}}
-<input type='submit' value='Create Post'>
-
+<input type='submit' class = "btn btn-primary" role = "btn" value='Post Comment'>
 </form>
 {%endblock content%}

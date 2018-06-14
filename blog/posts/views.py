@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from .models import Post, Comment
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
@@ -98,26 +98,20 @@ def post_delete(request, id=None): #delete
 	}
 	return HttpResponseRedirect('/posts/')
 
+def add_comment(request, id=None):
+	post= get_object_or_404(Post, id=id)
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.post = post
+			comment.save()
+			return HttpResponseRedirect(post.get_absolute_url())
+	else:
+		form = CommentForm()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	context = {
+		'form':form
+		}
+	return render(request,'add_comment.html', context)
 

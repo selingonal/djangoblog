@@ -19,21 +19,27 @@
 <small>Updated: {{instance.updated}}</small><br/>
 <div>
 	<p><a href="/posts" class="btn btn-primary" role="button">Home</a>
-	<a href="/posts/create" role="button">Leave a comment</a>
+	<a href="{{obj.get_absolute_url}}comment/"class = "btn" role="button">Leave a comment</a>
 	</p>
 </div>
 <small><small><small><p> Total Number of Comments: {{comments.count}}</p></small></small></small>
-<div class='col-sm-20 col-sm-offset-5'>
+<div class=bubble>
 {%for comment in comments %}
 	<div class='row'>
     <div class='col-sm-12'>
         <div class='thumbnail'>
-				<p>user: {{comment.user}}</p>
-				<p>{{comment.content}}</p>
-				<p>{{comment.timestamp}}</p>
-                <p>{{obj.content|linebreaks|truncatechars:30}}</p>
-                
-                </div></div>
+        	
+	    	<div class="bubble">
+				<ul>
+					<li>
+						user: {{comment.user}}<br/>
+						{{comment.content}}<br/>
+						{{comment.timestamp}}<br/>
+						
+					</li>
+				</ul>
+			</div>
+           
         </div>
     </div>
 </div>
@@ -42,3 +48,14 @@
 {%endfor%}
 </div>
 {%endblock content%}
+
+
+
+
+
+
+
+
+
+
+

@@ -1,4 +1,31 @@
+*{
+	box-sizing: border-box;
+}
 h1{
 	color: #777777;
 	font-family: "Impact";
+}
+div li{
+	display: block;
+	padding:15px;
+	width: 50%;
+	text-decoration: none;
+	position: relative;
+	background: #6ce0df;
+	border-radius: 10px;
+	max-width:500px;
+    word-wrap:break-word;
+}
+div li:after{
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 27px solid transparent;
+	border-right-color: #6ce0df;
+	border-left: 0;
+	margin-top: -27px;
+	margin-left: -20px;
 }
