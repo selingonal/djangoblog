@@ -7,9 +7,10 @@ also none of this code is commented yet so good luck until that comes.
 Project started: 6/4/18
 Data Lost: 6/6/18
 Last updated: 6/11/18
+
 # Current Itinerary
 Successes: 
   App has basic functionality now, looks p nice
   
  Needs work/ attention:
- 	Need to make user permissions work, , make page to allow users to sign up/be given permissons through a homepage
+ 	Need to make user permissions work, make page to allow users to sign up/be given permissons through a homepage, comments
