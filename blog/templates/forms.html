@@ -1,13 +1,14 @@
 {% extends "base.html" %}
-{%load crispy_forms_tags%}
 
 
 {%block content%}
-<H1> {{title}}</H1>
+<H1> Welcome Back!</H1>
 
 <form method ='POST' action ='' enctype =' multipart/form-data'> {% csrf_token %}
-{{form|crispy}}
-<input type='submit' value='{{title}}'/>
+{{form.as_p}}
+<input type='submit' class = "btn btn-primary" role = "btn" value='Login'>
+<!-- <input href="{{obj.get_absolute_url}}signup/" class = "btn " role = "btn" value='New Here? Sign up!'> -->
+
 
 </form>
 {%endblock content%}

@@ -6,7 +6,6 @@ from .forms import PostForm, CommentForm
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
-
 # The method we are designing, this app around is CRUD
 # CREATE -- MAKE NEW
 # RETRIEVE -- GET
@@ -14,10 +13,10 @@ from django.shortcuts import render
 # DELETE -- DELETE
 
 def post_create(request): #Create
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
-	if not request.useris_authenticated():
-		raise Http404
+	# if not request.user.is_staff or not request.user.is_superuser:
+	# 	raise Http404
+	# if not request.useris_authenticated():
+	# 	raise Http404
 
 	form = PostForm(request.POST or None, request.FILES or None)
 	if form.is_valid():
@@ -34,8 +33,8 @@ def post_create(request): #Create
 
 
 def post_detail(request, id=None): #retrieve
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
+	# if not request.user.is_staff or not request.user.is_superuser:
+	# 	raise Http404
 	instance = get_object_or_404(Post, id=id)
 	comments= Comment.objects.filter(post = id)
 
@@ -68,8 +67,8 @@ def listing(request):
 
 
 def post_update(request, id =None): #edit
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
+	# if not request.user.is_staff or not request.user.is_superuser:
+	# 	raise Http404
 	instance = get_object_or_404(Post, id=id)
 	form = PostForm(request.POST or None, request.FILES or None, instance =instance)
 	if form.is_valid():
@@ -87,8 +86,8 @@ def post_update(request, id =None): #edit
 
 
 def post_delete(request, id=None): #delete
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
+	# if not request.user.is_staff or not request.user.is_superuser:
+	# 	raise Http404
 	instance = get_object_or_404(Post, id=id)
 	form = PostForm(request.POST or None, instance =instance)
 	instance.delete()
@@ -99,34 +98,39 @@ def post_delete(request, id=None): #delete
 	return HttpResponseRedirect('/posts/')
 
 def add_comment(request, id=None):
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
-	form = CommentForm(request.POST or None, request.FILES or None)
-	if form.is_valid():
-		post = form.save(commit = False)
-		post.user = request.user
-		post.save()
-		form=CommentForm()
-		messages.success(request, "Successfully Created!")
-		return HttpResponseRedirect(post.get_absolute_url())
-	context={
-		"form": form,
-	}
-	return render(request, "add_comment.html",context)
+	post= get_object_or_404(Post, id=id)
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.post = post
+			comment.save()
+			return HttpResponseRedirect(post.get_absolute_url())
+	else:
+		form = CommentForm()
+
+	context = {
+		'form':form
+		}
+	return render(request,'add_comment.html', context)
 
 
 def comment_update(request, id=None):
 	if not request.user.is_staff or not request.user.is_superuser:
 		raise Http404
-	post = get_object_or_404(Post, id=id)
-	form = CommentForm(request.POST or None, request.FILES or None, post =post)
-	if form.is_valid():
-		post = form.save(commit = False)
-		post.save()
-		post.success(request, "Item Saved!")
-		form=CommentForm()
-		return HttpResponseRedirect(post.get_absolute_url())
-	context={
-		"form": form,
-	}
-	return render(request, "add_comment.html", context)
+	post= get_object_or_404(Post, id=id)
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.post = post
+			comment.save()
+			return HttpResponseRedirect(post.get_absolute_url())
+	else:
+		form = CommentForm()
+
+	context = {
+		'form':form
+		}
+	return render(request,'add_comment.html', context)
+

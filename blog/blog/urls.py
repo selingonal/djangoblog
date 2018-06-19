@@ -22,8 +22,8 @@ from accounts.views import (login_view, register_view, logout_view)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')),
-    path('', admin.site.urls),
     path('login/', login_view, name='login'),
+
 ]
 
 if settings.DEBUG:
