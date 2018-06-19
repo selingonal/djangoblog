@@ -6,7 +6,7 @@ also none of this code is commented yet so good luck until that comes.
 
 Project started: 6/4/18
 Data Lost: 6/6/18
-Last updated: 6/11/18
+Last updated: 6/19/18
 
 # Current Itinerary
 Successes: 
