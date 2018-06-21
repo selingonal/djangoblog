@@ -13,8 +13,6 @@ from django.core.exceptions import PermissionDenied
 def post_create(request): #Create
 	if not request.user.is_staff or not request.user.is_superuser:
 		raise PermissionDenied
-	# if not request.useris_authenticated():
-	# 	raise PermissionDenied
 
 	form = PostForm(request.POST or None, request.FILES or None)
 	if form.is_valid():
@@ -45,6 +43,9 @@ def post_detail(request, id=None): #retrieve
 
 
 def post_list(request): #list items
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise PermissionDenied
+
 	queryset_list= Post.objects.all()
 	paginator = Paginator(queryset_list, 10) # Show 10 contacts per page
 	#search query

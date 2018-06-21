@@ -6,7 +6,7 @@ from django.contrib.auth import(
 	)
 from .forms import UserLoginForm, UserRegisterForm
 from django.shortcuts import render, redirect
-import os.path
+
 def login_view(request):
 	title = "Login"
 	form=UserLoginForm(request.POST or None)
@@ -28,6 +28,7 @@ def register_view(request):
 		user.set_password(password)
 		user.save()
 		new_user = authenticate(username = user.username, password=user.password)
+		
 		login(request,user)
 		return redirect("/login")
 
