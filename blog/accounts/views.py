@@ -6,7 +6,7 @@ from django.contrib.auth import(
 	)
 from .forms import UserLoginForm, UserRegisterForm
 from django.shortcuts import render, redirect
-
+import os.path
 def login_view(request):
 	title = "Login"
 	form=UserLoginForm(request.POST or None)

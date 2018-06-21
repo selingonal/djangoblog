@@ -1,3 +1,4 @@
+#imports#
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
@@ -6,11 +7,7 @@ from .forms import PostForm, CommentForm
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
-# The method we are designing, this app around is CRUD
-# CREATE -- MAKE NEW
-# RETRIEVE -- GET
-# UPDATE -- EDIT
-# DELETE -- DELETE
+
 
 def post_create(request): #Create
 	# if not request.user.is_staff or not request.user.is_superuser:
@@ -49,6 +46,7 @@ def post_detail(request, id=None): #retrieve
 def post_list(request): #list items
 	queryset_list= Post.objects.all()
 	paginator = Paginator(queryset_list, 10) # Show 10 contacts per page
+	#search query
 	query= request.GET.get('q')
 	if query:
 		 queryset_list=queryset_list.filter(title__icontains=query)
@@ -133,4 +131,18 @@ def comment_update(request, id=None):
 		'form':form
 		}
 	return render(request,'add_comment.html', context)
+
+def comment_delete(request, id=None):
+	instance = get_object_or_404(Post, id=id)
+	form = PostForm(request.POST or None, instance =instance)
+	instance.delete()
+	messages.success(request, "Successfully Deleted!")
+	context ={
+		"form":form,
+	}
+	if not request.user.is_superuser or not request.user.is_valid:
+		raise Http404
+	else:
+		return HttpResponseRedirect(post.get_absolute_url())
+
 
