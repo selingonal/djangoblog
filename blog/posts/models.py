@@ -40,7 +40,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
 	post = models.ForeignKey(Post, related_name='comments',on_delete=models.CASCADE)
-	timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+	timestamp = models.DateTimeField(auto_now_add=False, blank=True)
+	updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+
 	user = models.CharField(max_length=250)
 	content = models.TextField()
 	image = models.ImageField(

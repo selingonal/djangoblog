@@ -6,14 +6,15 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
 
 
 
 def post_create(request): #Create
-	# if not request.user.is_staff or not request.user.is_superuser:
-	# 	raise Http404
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise PermissionDenied
 	# if not request.useris_authenticated():
-	# 	raise Http404
+	# 	raise PermissionDenied
 
 	form = PostForm(request.POST or None, request.FILES or None)
 	if form.is_valid():
@@ -30,8 +31,8 @@ def post_create(request): #Create
 
 
 def post_detail(request, id=None): #retrieve
-	# if not request.user.is_staff or not request.user.is_superuser:
-	# 	raise Http404
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise PermissionDenied
 	instance = get_object_or_404(Post, id=id)
 	comments= Comment.objects.filter(post = id)
 
@@ -65,8 +66,8 @@ def listing(request):
 
 
 def post_update(request, id =None): #edit
-	# if not request.user.is_staff or not request.user.is_superuser:
-	# 	raise Http404
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise PermissionDenied
 	instance = get_object_or_404(Post, id=id)
 	form = PostForm(request.POST or None, request.FILES or None, instance =instance)
 	if form.is_valid():
@@ -84,8 +85,8 @@ def post_update(request, id =None): #edit
 
 
 def post_delete(request, id=None): #delete
-	# if not request.user.is_staff or not request.user.is_superuser:
-	# 	raise Http404
+	if not request.user.is_staff or not request.user.is_superuser or not request.user.post.author:
+		raise PermissionDenied
 	instance = get_object_or_404(Post, id=id)
 	form = PostForm(request.POST or None, instance =instance)
 	instance.delete()
@@ -96,6 +97,8 @@ def post_delete(request, id=None): #delete
 	return HttpResponseRedirect('/posts/')
 
 def add_comment(request, id=None):
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise PermissionDenied
 	post= get_object_or_404(Post, id=id)
 	if request.method == 'POST':
 		form = CommentForm(request.POST)
@@ -115,7 +118,7 @@ def add_comment(request, id=None):
 
 def comment_update(request, id=None):
 	if not request.user.is_staff or not request.user.is_superuser:
-		raise Http404
+		raise PermissionDenied
 	post= get_object_or_404(Post, id=id)
 	if request.method == 'POST':
 		form = CommentForm(request.POST)
@@ -133,6 +136,8 @@ def comment_update(request, id=None):
 	return render(request,'add_comment.html', context)
 
 def comment_delete(request, id=None):
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise PermissionDenied
 	instance = get_object_or_404(Post, id=id)
 	form = PostForm(request.POST or None, instance =instance)
 	instance.delete()
