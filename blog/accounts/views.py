@@ -27,7 +27,7 @@ def register_view(request):
 		password=form.cleaned_data.get('password')
 		user.set_password(password)
 		user.save()
-		new_user = authenticate(username = user.username, password=user.password)
+		new_user = authenticate(username = user.username, password=user.password, is_staff=True)
 		
 		login(request,user)
 		return redirect("/login")
@@ -40,7 +40,7 @@ def register_view(request):
 
 def logout_view(request):
 	logout(request)
-	return render(request, "forms.html", {})
+	return render(request, "logout.html", {})
 
 def default_home(request):
 	return render(request, "home.html",{})

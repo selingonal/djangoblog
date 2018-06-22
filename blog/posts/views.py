@@ -97,10 +97,44 @@ def post_delete(request, id=None): #delete
 	}
 	return HttpResponseRedirect('/posts/')
 
-def add_comment(request, id=None):
+
+def add_comment(request, pk=None):
 	if not request.user.is_staff or not request.user.is_superuser:
 		raise PermissionDenied
-	post= get_object_or_404(Post, id=id)
+	post= get_object_or_404(Post, pk=pk)
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.post = post
+			comment.user = request.user
+			comment.save()
+			return HttpResponseRedirect(post.get_absolute_url())
+	else:
+		form = CommentForm()
+
+	context = {
+		'form':form
+		}
+	return render(request,'add_comment.html', context)
+
+
+def view_comment(request,pk=None):
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise PermissionDenied
+	instance = get_object_or_404(Post, pk=pk)
+	context ={
+		"title": instance.title,
+		"instance": instance,
+		"comments":comments,
+	}
+	return render(request, "post_detail.html",context)
+
+
+def comment_update(request, pk=None):
+	if not request.user.is_staff or not request.user.is_superuser:
+		raise PermissionDenied
+	post= get_object_or_404(Comment, pk=pk)
 	if request.method == 'POST':
 		form = CommentForm(request.POST)
 		if form.is_valid():
@@ -116,39 +150,15 @@ def add_comment(request, id=None):
 		}
 	return render(request,'add_comment.html', context)
 
-
-def comment_update(request, id=None):
-	if not request.user.is_staff or not request.user.is_superuser:
+def comment_delete(request, pk=None):
+	if not request.user.is_staff or not request.user.is_superuser or not request.user.post.author:
 		raise PermissionDenied
-	post= get_object_or_404(Post, id=id)
-	if request.method == 'POST':
-		form = CommentForm(request.POST)
-		if form.is_valid():
-			comment = form.save(commit=False)
-			comment.post = post
-			comment.save()
-			return HttpResponseRedirect(post.get_absolute_url())
-	else:
-		form = CommentForm()
-
-	context = {
-		'form':form
-		}
-	return render(request,'add_comment.html', context)
-
-def comment_delete(request, id=None):
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise PermissionDenied
-	instance = get_object_or_404(Post, id=id)
-	form = PostForm(request.POST or None, instance =instance)
+	instance = get_object_or_404(Comment, pk=pk)
+	form = CommentForm(request.POST or None, instance =instance)
 	instance.delete()
 	messages.success(request, "Successfully Deleted!")
 	context ={
 		"form":form,
 	}
-	if not request.user.is_superuser or not request.user.is_valid:
-		raise Http404
-	else:
-		return HttpResponseRedirect(post.get_absolute_url())
-
+	return HttpResponseRedirect(post.get_absolute_url())
 
