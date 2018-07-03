@@ -4,49 +4,53 @@
 
 {%block content%}
 <div class='col-sm-6 col-sm-offset-3'>
-
-<h1> {{title}} <small><small><small><small>| {{instance.timestamp}}</small></small></small></small> </h1>
-<p> Author: {{instance.user}} </p>
-
-{%if instance.image %}
-	<img src = '{{instance.image.url}}' class = 'img-responsive'/>
-{%endif%}
-{%if instance.image %}
-	<embed src='{{instance.image.url}}' class = 'img-responsive'width="500" height= "375" type='application/pdf'/> 
-{%endif%}
+<!-- HEADER/TITLE -->
+	<h1> {{title}} <small><small><small><small>| {{instance.timestamp}}</small></small></small></small> </h1>
+	<p> Author: {{instance.user}} </p>
+<!-- CONTENT -->
+	{%if instance.image %}
+		<img src = '{{instance.image.url}}' class = 'img-responsive'/>
+	{%endif%}
+	{%if instance.image %}
+		<embed src='{{instance.image.url}}' class = 'img-responsive'width="500" height= "375" type='application/pdf'/> 
+	{%endif%}
 
 {{instance.content|linebreaks}}<br/>
-<small>Updated: {{instance.updated}}</small><br/>
-<div>
-	<p><a href="/posts" class="btn btn-primary" role="button">Home</a>
-	<a href="{{obj.get_absolute_url}}comment/"class = "btn" role="button">Leave a comment</a>
-	</p>
-</div>
-<small><small><small><p> Total Number of Comments: {{comments.count}}</p></small></small></small>
-<div class=bubble>
-{%for comment in comments %}
-	<div class='row'>
-    <div class='col-sm-12'>
-        <div class='thumbnail'>
-        	
-	    	<div class="bubble">
-				<ul>
-					<li>
-						user: {{comment.user}}<br/>
-						{{comment.content}}<br/>
-						{{comment.timestamp}}<br/>
-						<p><a href="{{obj.get_absolute_url}}/" class="btn btn-primary" role="button">View</a>
-						
-					</li>
-				</ul>
-			</div>
-           
-        </div>
-    </div>
-</div>
-{%empty%}
-	<p>There are no comments for this post</p>
-{%endfor%}
+
+<!-- FOOTER -->
+	<small>Updated: {{instance.updated}}</small><br/>
+	<div>
+		<p><a href="/posts" class="btn btn-primary" role="button">Home</a>
+		<a href="{{obj.get_absolute_url}}comment/"class = "btn" role="button">Leave a comment</a>
+		</p>
+	</div>
+<!-- START OF COMMENTS SECTION -->
+	<small><small><small><p> Total Number of Comments: {{comments.count}}</p></small></small></small>
+	<div class=bubble>
+	{%for comment in comments %}
+		<div class='row'>
+	    <div class='col-sm-12'>
+	        <div class='thumbnail'>
+	        	
+		    	<div class="bubble">
+					<ul>
+						<!-- COMMENT PROPERTIES // FORMATTING IN CSS FILE. -->
+						<li>
+							user: {{comment.user}}<br/>
+							{{comment.content}}<br/>
+							{{comment.timestamp}}<br/>
+							<p><a href="{{obj.get_absolute_url}}/" class="btn btn-primary" role="button">View</a>
+							
+						</li>
+					</ul>
+				</div>
+	           
+	        </div>
+	    </div>
+	</div>
+	{%empty%}
+		<p>There are no comments for this post</p>
+	{%endfor%}
 </div>
 {%endblock content%}
 

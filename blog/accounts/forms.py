@@ -6,7 +6,6 @@ from django.contrib.auth import(
 	logout,
 	)
 
-
 User= get_user_model()
 
 class UserLoginForm(forms.Form):
@@ -41,3 +40,4 @@ class UserRegisterForm(forms.ModelForm):
 			'username',
 			'password', 
 		]
+	
