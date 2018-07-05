@@ -21,8 +21,8 @@
                 This here is what displays in the title of each post on the listing page. Why did I use 1000000 smalls? Who knows? It is certainly not good practice. Please be better than this when you write your HTML. There's definately some CSS in the static/base.css file for this that I just didn't use. ¯\(•^•)/¯
             -->
                 <div class='caption'>
-                <h3> <a href='{{obj.get_absolute_url}}'>{{obj.title|linebreaks|truncatechars:20}} </a><small><small><small><small>Created: {{obj.timestamp|timesince}} ago</h3>
-                Updated: {{obj.updated}}<p> Author: {{obj.user}} </p></small></small></small></small></small>
+                <h3> <a href='{{obj.get_absolute_url}}'>{{obj.title|linebreaks|truncatechars:20}} </a><small><small>Created: {{obj.timestamp|timesince}} ago</h3>
+                Updated: {{obj.updated}}<p> <b> Author: {{obj.user}} </b></p></small></small>
 
                 <!-- Here, as above, I'm truncating the amount of characters that can be reveled of the content. This piece of HTML provides linebreaks, actually, which is more fitting for an entry that is bound to be fairly long -->
                 <p>{{obj.content|linebreaks|truncatechars:30}}</p>
