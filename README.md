@@ -1,16 +1,82 @@
-# django blog
-This repository contains all of the files I am using to create a Django-based web blog as of June, 2018. This includes the documentation containting the User Stories of this project, and all the files used by the applications and their individual elements. 
+Blogger 2000
+=============
 
-# More documentation is to come as the project progresses. 
-also none of this code is commented yet so good luck until that comes.
+Blogger 2000 is a basic blogging application run by django. 
+With it are basic functions necessary to making a web app.
 
-Project started: 6/4/18
-Data Lost: 6/6/18
-Last updated: 6/21/18
+CONTAINS USE OF: 
+	Python
+	Django
+	HTML
+	CSS
+	JavaScript
+Be mindful of what you will need to learn/review before you start.
 
-# Current Itinerary
-Successes: 
-  App has basic functionality now, looks p nice
-  
- Needs work/ attention:
- 	make groups to give users who sign up less authority than the staff
+VERSION INFORMATION: 
+	Django: 2.0.6
+	Python: 3.6.4
+
+# THIS VERSION OF DJANGO only supports Python 3.4, 3.5, and 3.6
+# BE AWARE OF INCOMPATIBILITIES with earlier versions of django.
+# To learn more, read the documentation on the Django website:  https://docs.djangoproject.com/en/2.0/releases/2.0/
+
+
+VERSIONS OF PYTHON EARLIER THAN 3.4 WILL NOT RUN THIS APPLICATION. 
+ 
+Features
+--------
+//all actions are characteristics of a standard CRUD interface//
+
+Posts.app:
+	-Create/edit/delete/view posts
+	-Create/edit/delete/view comments
+	-Post image files
+
+Accounts.app:
+	-User Authentication/Permissions
+
+
+Other contents
+--------------
+Templates: 
+	-All HTML files
+	-Image files for homescreen/welcome page
+
+Static: 
+	-All CSS files 
+
+Media_cdn:
+	-these are all the files that get uploaded and displayed in posts
+
+Static_cdn: 
+	-bootstrapped css files
+
+
+Installation
+------------
+
+Install django 2.0.6:
+    https://docs.djangoproject.com/en/2.0/topics/install/
+
+Install python 3.6.4:
+	https://www.python.org/downloads/
+
+//Optional:// Download Anadonda Distribution instead to have both of these and more:
+	https://www.anaconda.com/download/
+
+Instructions: 
+	-Download according to OS
+	-Please refer to online resources if you are unfamilliar with using the CommandLine/terminal
+
+
+
+Support
+-------
+
+If you are having issues, please let me know.
+
+
+License
+-------
+
+This project is unlicenced
