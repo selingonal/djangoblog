@@ -16,9 +16,8 @@ VERSION INFORMATION:
 	Django: 2.0.6
 	Python: 3.6.4
 
-# THIS VERSION OF DJANGO only supports Python 3.4, 3.5, and 3.6
-# BE AWARE OF INCOMPATIBILITIES with earlier versions of django.
-# To learn more, read the documentation on the Django website:  https://docs.djangoproject.com/en/2.0/releases/2.0/
+ THIS VERSION OF DJANGO only supports Python 3.4, 3.5, and 3.6
+ BE AWARE OF INCOMPATIBILITIES with earlier versions of django.# To learn more, read the documentation on the Django website:  https://docs.djangoproject.com/en/2.0/releases/2.0/
 
 
 VERSIONS OF PYTHON EARLIER THAN 3.4 WILL NOT RUN THIS APPLICATION. 
