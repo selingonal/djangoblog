@@ -91,27 +91,29 @@ def listing(request):
 '''
 
 def post_update(request, id =None): #edit
-	if not request.user.is_staff or not request.user.is_superuser or not request.user.is_authenticated:
+	if request.user.is_authenticated and request.user == Post.user:	
+		
+		instance = get_object_or_404(Post, id=id)
+		
+		form = PostForm(request.POST or None, request.FILES or None, instance =instance)
+		#to edit, we're reopening the form we used to create the post and updating accordingly
+		if form.is_valid():
+			instance = form.save(commit = False)
+			instance.save()
+			messages.success(request, "Item Saved!")
+			form=PostForm()
+			return HttpResponseRedirect(instance.get_absolute_url())
+		context={
+			"form": form,
+		}
+		return render(request, "post_form.html", context)
+		
+	else:
 		raise PermissionDenied
-	
-	instance = get_object_or_404(Post, id=id)
-	
-	form = PostForm(request.POST or None, request.FILES or None, instance =instance)
-	#to edit, we're reopening the form we used to create the post and updating accordingly
-	if form.is_valid():
-		instance = form.save(commit = False)
-		instance.save()
-		messages.success(request, "Item Saved!")
-		form=PostForm()
-		return HttpResponseRedirect(instance.get_absolute_url())
-	context={
-		"form": form,
-	}
-	return render(request, "post_form.html", context)
 
 
 def post_delete(request, id=None): #delete
-	if not request.user.is_staff or not request.user.is_superuser or not request.user.is_authenticated:
+	if not request.user.is_authenticated:
 		raise PermissionDenied
 	instance = get_object_or_404(Post, id=id)
 	form = PostForm(request.POST or None, instance =instance)
