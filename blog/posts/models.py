@@ -11,8 +11,8 @@ def upload_location(instance, filename):
 	return "%s/%s" %(instance.id,filename)
 
 class Post(models.Model):
-	# if you don't have a max length for your char field, it won't migrate. 
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1,on_delete=models.CASCADE)
+	# if you don't have a max length for your char field, it won't migrate. 
 	title = models.CharField(max_length=120) 
 	content = models.TextField()
 	timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)

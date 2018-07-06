@@ -36,7 +36,7 @@ def register_view(request):
 		"form":form,
 		"title":title,
 	}
-	return render(request, "forms.html", context)
+	return render(request, "registerform.html", context)
 
 def logout_view(request):
 	logout(request)
