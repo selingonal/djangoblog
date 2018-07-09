@@ -15,7 +15,7 @@ from django.conf import settings
 #please refer to post_create's comments as a reference for repetitive code
 
 def post_create(request): #Create
-	#Permissons to create a post are limited to staff, superusers, and users with author authorization
+	#Permissons to create a post are limited to users who are signed in, including staff and superusers.
 	if not request.user.is_authenticated:
 		raise PermissionDenied
 
@@ -83,19 +83,18 @@ def post_list(request): #list items
 			"title": "List"
 		}
 	return render(request, "post_list.html",context)
-'''
- #I don't quite remember what this is or what it does 
-def listing(request):
-    contact_list = Contacts.objects.all()
-    return render(request, 'post_list.html', {'queryset': queryset_list})
-'''
+
 
 def post_update(request, id =None): #edit
  
-	if not request.user.is_authenticated and User == Post.user:
-		raise PermissionDenied
 	instance = get_object_or_404(Post, id=id)
 	form = PostForm(request.POST or None, request.FILES or None, instance =instance)
+
+	if not request.user.is_authenticated:
+		raise PermissionDenied
+	elif request.user != instance.user or not user.is_staff or not user.is_superuser:
+		raise PermissionDenied
+
 	#to edit, we're reopening the form we used to create the post and updating accordingly
 	if form.is_valid():
 		instance = form.save(commit = False)
@@ -108,16 +107,15 @@ def post_update(request, id =None): #edit
 	}
 	return render(request, "post_form.html", context)
 
-	
-
 
 def post_delete(request, id=None): #delete
-	if request.user.is_authenticated:
-			username= request.user.username
+	instance = get_object_or_404(Post, id=id)
+	form = PostForm(request.POST or None, request.FILES or None, instance =instance)
+
 	if not request.user.is_authenticated:
 		raise PermissionDenied
-	instance = get_object_or_404(Post, id=id)
-	form = PostForm(request.POST or None, instance =instance)
+	elif request.user != instance.user or not user.is_staff or not user.is_superuser:
+		raise PermissionDenied
 	#django already gives us a function to delete, so that's what we're using
 	instance.delete()
 	messages.success(request, "Successfully Deleted!")
@@ -146,41 +144,13 @@ def add_comment(request, id=None):
 		'form':form
 		}
 	return render(request,'add_comment.html', context)
+
+
+
+
 '''
-
-def view_comment(request,pk=None):
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise PermissionDenied
-	instance = get_object_or_404(Post, pk=pk)
-	context ={
-		"title": instance.title,
-		"instance": instance,
-		"comments":comments,
-	}
-	return render(request, "post_detail.html",context)
-
-
-def comment_update(request, pk=None):
-	if not request.user.is_staff or not request.user.is_superuser:
-		raise PermissionDenied
-	post= get_object_or_404(Comment, pk=pk)
-	if request.method == 'POST':
-		form = CommentForm(request.POST)
-		if form.is_valid():
-			comment = form.save(commit=False)
-			comment.post = post
-			comment.save()
-			return HttpResponseRedirect(post.get_absolute_url())
-	else:
-		form = CommentForm()
-
-	context = {
-		'form':form
-		}
-	return render(request,'add_comment.html', context)
-
 def comment_delete(request, pk=None):
-	if not request.user.is_staff or not request.user.is_superuser or not request.user.post.author:
+	if not request.user.is_authenticated:
 		raise PermissionDenied
 	instance = get_object_or_404(Comment, pk=pk)
 	form = CommentForm(request.POST or None, instance =instance)
